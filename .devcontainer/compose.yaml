@@ -1,0 +1,62 @@
+name: "bookitup"
+
+services:
+  rails-app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+    volumes:
+    - ../..:/workspaces:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+    depends_on:
+    - selenium
+    - redis
+    - postgres
+
+  selenium:
+    image: selenium/standalone-chromium
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2
+    restart: unless-stopped
+    volumes:
+    - redis-data:/data
+
+  postgres:
+    image: postgres:16.1
+    restart: unless-stopped
+    networks:
+    - default
+    volumes:
+    - postgres-data:/var/lib/postgresql/data
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+  
+  solr:   # Add Solr service
+    image: solr:latest
+    container_name: solr
+    ports:
+      - "8983:8983"   # Exposes the Solr admin panel at http://localhost:8983
+    volumes:
+      - solr-data:/var/solr
+    restart: unless-stopped
+    command:
+      - solr-precreate
+      - bookitup_core    # Create a core named "bookitup_core"
+
+volumes:
+  redis-data:
+  postgres-data:
+  solr-data:   # Add a volume for Solr data
+
