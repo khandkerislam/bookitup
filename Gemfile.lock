@@ -108,6 +108,10 @@ GEM
     diff-lcs (1.5.1)
     drb (2.2.1)
     erubi (1.13.0)
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     faraday (2.10.1)
       faraday-net_http (>= 2.0, < 3.2)
       logger
@@ -348,6 +352,8 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  factory_bot (~> 6.4)
+  faker (~> 3.4)
   importmap-rails
   jbuilder
   pg (~> 1.1)
