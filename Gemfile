@@ -65,3 +65,5 @@ end
 gem "devise", "~> 4.9"
 
 gem "factory_bot", "~> 6.4"
+
+gem "faker", "~> 3.4"
