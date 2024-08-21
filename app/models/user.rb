@@ -6,4 +6,12 @@ class User < ApplicationRecord
 
   # Constants
   enum role: { patron: 0, librarian: 1 }
+
+  validates :email, presence: true
+  validates :password, presence: true
+  validates :role, presence: true
+  validates :card_number, presence: true
+
+  validates :email, uniqueness: true
+  validates :card_number, uniqueness: true
 end
